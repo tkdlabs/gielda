@@ -9,6 +9,20 @@ In 1998/99, there was very limited access to good CS books in Poland, limited in
 
 # Commentary from Claude Fable
 
+## Initial investigation
+
+Done — and this went far better than a typical lost-source recovery, because you compiled with debug info enabled. The EXE carries a full Turbo Debugger symbol table: 854 original identifier names, 664 symbols, and 2,107 line-number records.
+
+Highlights of what came back:
+
+Project layout — program gielda (G.PAS, ~1,582 lines, saved 1999‑02‑11 19:11) + three units: data1 (DATA1.PAS, the price engine — dated March 1997, two years older than the rest), data2 (DATA2.PAS, the F4 prognosis screens, ~896 lines), and import (EGAVGA BGI driver + SANS font linked in via the BINOBJ trick).
+
+All 47 procedures with names, signatures, locals, and source line numbers — e.g. wpisz_wartosci_agros(sesjak, cenanw, cenast, mini, maxi, war, ilo) at line 197, agros_nowses(var cenan1, cenas, min, max, czujnik, ryzyko, sesja, sesjem) at DATA1.PAS:17, the Corupt fake-corruption error handler at line 441, and a ~1,128-line main body holding the whole event loop (F2 Kupno / F3 Sprzedaż are inline, not procedures). Fun fossil: the copy-pasted *_nowses procedures have their first parameter named cenan1 through cenan8.
+
+Your save file decoded — GAME.SAV is the 418-byte rekord type; the save shows session 8, 2,390 zł cash from a 2,000 zł start, no shares held, with full price/min/max/risk state for AGROS, BIG, BPH, BSK, KĘTY, OPTIMUS, WEDEL and ŻYWIEC. GIELDA.CFG is just the 1-byte sound flag.
+
+## Final Result
+
 There they are — your source code is back. The top four are UTF-8 (readable in any modern editor), the DOS/ copies are CP852-encoded byte-for-byte like your originals, so they'll compile in Turbo Pascal 7.0 under DOSBox (instructions in COMPILE.txt — you just need EGAVGA.BGI and SANS.CHR converted with BINOBJ).
 
 A few things you might enjoy rediscovering in your own 12-to-14-year-old code:
