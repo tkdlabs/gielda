@@ -1,0 +1,37 @@
+GIEŁDA v1.1 — reconstructed source (from GIELDA.EXE, TP 7.0 debug build)
+=========================================================================
+
+Files
+  G.PAS       main program   (original: G.PAS,     1999-02-11 19:11)
+  DATA1.PAS   price engine   (original: DATA1.PAS, 1997-03-11 20:09)
+  DATA2.PAS   prognoses      (original: DATA2.PAS, 1999-02-11 18:29)
+  IMPORT.PAS  BGI driver+font linked into the EXE (BINOBJ)
+  DOS/        same files encoded in CP852 (the original encoding) —
+              use THESE in Turbo Pascal / DOSBox
+
+To compile (DOSBox + Turbo Pascal 7.0):
+  1. Get EGAVGA.BGI and SANS.CHR from the TP7 BGI directory, then:
+       BINOBJ EGAVGA.BGI EGAVGA.OBJ EgaVgaDriver
+       BINOBJ SANS.CHR   SANS.OBJ   SansFont
+  2. TPC G.PAS   (or compile in the IDE; units compile automatically)
+  3. The game expects GIELDA.CFG (1 byte: 0/1 sound flag) in its dir —
+     it Resets the file without creating it, so create it once:
+     e.g. in DOS:  ECHO.|CHOICE /C:01 ... or simply copy your original.
+
+Reconstruction notes
+  - Everything traceable to the binary is faithful: identifiers, types,
+    procedure signatures, screen text (CP852), key codes, file formats,
+    program logic, and source line numbering (marked in comments).
+  - goto LABEL NAMES were not stored in Borland debug info; the label
+    identifiers (nowases, odswiez, kupsel, ...) are reconstructed.
+  - Formatting/indentation is approximate; statement-per-line layout
+    follows the original line map.
+  - Known quirks preserved from the original:
+      * F1 (Pomoc) does nothing — jumps straight to screen refresh
+      * F5 chart shows 'WYKRES W CZASIE PRODUKCJI !!!' + free memory
+      * czujnik=3 branch assigns cenan := cenan (no-op)
+      * pisz_finanse/wpisz_wartosci take INTEGER params but receive
+        LONGINTs (displays would wrap past 32767)
+      * each *_nowses re-rolls czujnik/sesja and zeroes sesjem at the
+        end of every call, so the sesja/sesjem trend-duration mechanism
+        never persists across sessions
