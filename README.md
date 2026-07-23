@@ -1,6 +1,10 @@
 # gielda
 My 12-14 year old project in Turbo Pascal, reverse engineered by Fable from executable with debugging symbols.
+
+
 Note: this is terrible code just like you'd expect from driven non-educated 12-14 year old.
+
+
 In 1998/99, there was very limited access to good CS books in Poland, limited internet, no stack overflow etc...
 
 # Commentary from Claude Fable
